@@ -1,4 +1,4 @@
-"""superlists URL Configuration
+"""lists URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -13,12 +13,12 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import include, url
-from lists import views as list_views
-from lists import urls as list_urls
+from django.conf.urls import url
+from lists import views
 
 urlpatterns = [
-	url(r'^$', list_views.home_page,name='home'),
-	url(r'^lists/', include(list_urls)),
+	url(r'^new$', views.new_list, name='new_list'),
+	url(r'^(\d+)/$', views.view_list, name='view_list'),
+    url(r'^(\d+)/add_item$', views.add_item,name='add_item'),
     # url(r'^admin/', include(admin.site.urls)),
 ]
