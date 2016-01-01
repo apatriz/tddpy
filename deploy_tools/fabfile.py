@@ -3,16 +3,15 @@ from fabric.api import env, local, run
 import random
 
 REPO_URL = 'https://github.com/apatriz/tddpy.git'
-SITE_NAME = 'superlists.apatriz.com'
 env.hosts = ['ubuntu@ec2-54-213-105-216.us-west-2.compute.amazonaws.com']
 env.key_filename = '~/.ssh/apatriz-key-pair-uswest.pem'
 
-def deploy():
-    site_folder = '/home/ubuntu/sites/%s' % (SITE_NAME)
+def deploy(site_name):
+    site_folder = '/home/ubuntu/sites/%s' % (site_name)
     source_folder = site_folder + '/source'
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
-    _update_settings(source_folder, SITE_NAME)
+    _update_settings(source_folder, site_name)
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
