@@ -31,6 +31,12 @@ class ItemFormTest(TestCase):
 
 class ExistingListItemFormTest(TestCase):
 
+    def test_form_save(self):
+        list_ = List.objects.create()
+        form = ExistingListItemForm(for_list=list_, data={'text': 'hi'})
+        new_item = form.save()
+        self.assertEqual(new_item, Item.objects.all()[0])
+
     def test_form_renders_item_text_input(self):
         list_ = List.objects.create()
         form = ExistingListItemForm(for_list=list_)
