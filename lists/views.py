@@ -1,11 +1,13 @@
 from django.shortcuts import redirect, render
 from lists.forms import ItemForm, ExistingListItemForm
-from lists.models import Item, List
+from lists.models import List
+from django.views.generic import FormView
 
 
 # Create your views here.
-def home_page(request):
-    return render(request, 'home.html', {'form': ItemForm()})
+class HomePageView(FormView):
+    template_name = 'home.html'
+    form_class = ItemForm
 
 
 def view_list(request, list_id):
