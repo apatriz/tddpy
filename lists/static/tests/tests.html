@@ -8,14 +8,26 @@
 
 <body>
     <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
-    <script type="text/javascript" src="qunit.js"></script>
-    <script>
-/*global $, test, equal */
+    <div id="qunit-fixture">
+        <form>
+            <input  name="text" />
+            <div class="has-error">Error text</div>
+        </form>
+    </div>
 
-test("smoke test", function() {
-    equal(1, 1, "Math works!")
-});
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript" src="qunit.js"></script>
+    <script type="text/javascript" src="../list.js"></script>
+    <script>
+        test("errors should be hidden on keypress", function() {
+            $('input').trigger('keypress');
+            equal($('has-error').is(':visible'), false);
+        });
+
+        test("errors should not be hidden unless there is a keypress", function() {
+            equal($('.has-error').is(':visible'), true);
+        });
 
     </script>
 </body>
