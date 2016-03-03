@@ -20,6 +20,14 @@
     <script type="text/javascript" src="qunit.js"></script>
     <script type="text/javascript" src="../list.js"></script>
     <script>
+        function setupModule() {
+            $("input[name='text']").on('keypress click ', function(){
+                $(".has-error").hide();
+            });
+        }
+
+        module("tests", {setup:setupModule});
+
         test("errors should be hidden on keypress", function() {
             $("input[name='text']").trigger('keypress');
             equal($('has-error').is(':visible'), false);
