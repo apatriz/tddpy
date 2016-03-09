@@ -11,7 +11,7 @@ class HomePageView(FormView):
     form_class = ItemForm
 
 
-class ViewAndAddToList(CreateView, SingleObjectMixin,):
+class ViewAndAddToList(CreateView, SingleObjectMixin):
     model = List
     template_name = 'list.html'
     form_class = ExistingListItemForm
@@ -20,8 +20,15 @@ class ViewAndAddToList(CreateView, SingleObjectMixin,):
         self.object = self.get_object()
         return form_class(for_list=self.object, data=self.request.POST)
 
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.form_class(for_list=self.object)
+        return self.render_to_response(self.get_context_data(form=form))
 
-class NewListView(CreateView, HomePageView):
+
+class NewListView(CreateView):
+    template_name = 'home.html'
+    form_class = ItemForm
 
     def form_valid(self, form):
         list = List.objects.create()

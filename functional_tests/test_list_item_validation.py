@@ -4,7 +4,10 @@ from .base import FunctionalTest
 class ItemValidationTest(FunctionalTest):
 
     def get_error_element(self):
-        return self.browser.find_element_by_css_selector('.has-error')
+        try:
+            return self.browser.find_element_by_css_selector('.has-error')
+        except:
+            return None
 
     def test_cannot_add_empty_list_items(self):
         # Mini goes to the home page and accidentally tries to submit
@@ -75,3 +78,12 @@ class ItemValidationTest(FunctionalTest):
         # She is pleased to see that the error message disappears
         error = self.get_error_element()
         self.assertFalse(error.is_displayed())
+
+    def test_no_errors_on_valid_submission(self):
+        # Mini adds a valid list item to a new list
+        self.browser.get(self.server_url)
+        self.get_item_input_box().send_keys('Buy bananas\n')
+        self.check_for_row_in_list_table('1: Buy bananas')
+        # She sees that no error is displayed
+        error = self.get_error_element()
+        self.assertEqual(error, None)

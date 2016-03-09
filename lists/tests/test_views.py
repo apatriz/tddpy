@@ -114,6 +114,18 @@ class ListViewTest(TestCase):
         self.assertIsInstance(response.context['form'], ExistingListItemForm)
         self.assertContains(response, 'name="text"')
 
+    def test_POST_redirects_to_list_view_with_no_empty_item_errors(self):
+        other_list = List.objects.create()
+        correct_list = List.objects.create()
+        response = self.client.post(
+            '/lists/%d/' % (correct_list.id,),
+            data={'text': 'A new item for an existing list'}
+        )
+        self.assertRedirects(response, '/lists/%d/' % (correct_list.id,))
+
+        response_get = self.client.get('/lists/%d/' % (correct_list.id))
+        self.assertNotContains(response_get, escape(EMPTY_ITEM_ERROR))
+
 
 class NewListTest(TestCase):
 
