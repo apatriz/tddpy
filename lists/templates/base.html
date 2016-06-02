@@ -44,6 +44,15 @@
 
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="https://login.persona.org/include.js"></script>
+<script type="text/javascript" src="/static/accounts.js"></script>
 <script type="text/javascript" src="/static/list.js"></script>
+
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		Superlists.Accounts.initialize(navigator)
+	});
+</script>
 </body>
 </html>
